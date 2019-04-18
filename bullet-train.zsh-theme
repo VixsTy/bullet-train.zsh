@@ -156,10 +156,21 @@ if [ ! -n "${BULLETTRAIN_KCTX_BG+1}" ]; then
   BULLETTRAIN_KCTX_BG=yellow
 fi
 if [ ! -n "${BULLETTRAIN_KCTX_FG+1}" ]; then
-  BULLETTRAIN_KCTX_FG=white
+  BULLETTRAIN_KCTX_FG=black
 fi
 if [ ! -n "${BULLETTRAIN_KCTX_PREFIX+1}" ]; then
   BULLETTRAIN_KCTX_PREFIX="⎈"
+fi
+
+# Kubernetes Namespace
+if [ ! -n "${BULLETTRAIN_KNS_BG+1}" ]; then
+  BULLETTRAIN_KNS_BG=green
+fi
+if [ ! -n "${BULLETTRAIN_KNS_FG+1}" ]; then
+  BULLETTRAIN_KNS_FG=black
+fi
+if [ ! -n "${BULLETTRAIN_KNS_PREFIX+1}" ]; then
+  BULLETTRAIN_KNS_PREFIX="🗄️ "
 fi
 
 # ELIXIR
@@ -553,8 +564,17 @@ prompt_rust() {
 # Kubernetes Context
 prompt_kctx() {
   if command -v kubectl > /dev/null 2>&1; then
-    if [[ -f $BULLETTRAIN_KCTX_KCONFIG ]]; then
+    if [[ ! -z $BULLETTRAIN_KCTX_DISPLAY ]]; then
       prompt_segment $BULLETTRAIN_KCTX_BG $BULLETTRAIN_KCTX_FG $BULLETTRAIN_KCTX_PREFIX" $(kubectl config current-context)"
+    fi
+  fi
+}
+
+# Kubernetes Context
+prompt_kns() {
+  if command -v kubectl > /dev/null 2>&1; then
+    if [[ ! -z $BULLETTRAIN_KNS_DISPLAY ]]; then
+      prompt_segment $BULLETTRAIN_KNS_BG $BULLETTRAIN_KNS_FG $BULLETTRAIN_KNS_PREFIX" $(kubectl config view --minify --output 'jsonpath={..namespace}')"
     fi
   fi
 }
