@@ -564,18 +564,14 @@ prompt_rust() {
 # Kubernetes Context
 prompt_kctx() {
   if command -v kubectl > /dev/null 2>&1; then
-    if [[ ! -z $BULLETTRAIN_KCTX_DISPLAY ]]; then
-      prompt_segment $BULLETTRAIN_KCTX_BG $BULLETTRAIN_KCTX_FG $BULLETTRAIN_KCTX_PREFIX" $(kubectl config current-context)"
-    fi
+    prompt_segment $BULLETTRAIN_KCTX_BG $BULLETTRAIN_KCTX_FG $BULLETTRAIN_KCTX_PREFIX" $(kubectl config current-context)"
   fi
 }
 
 # Kubernetes Context
 prompt_kns() {
   if command -v kubectl > /dev/null 2>&1; then
-    if [[ ! -z $BULLETTRAIN_KNS_DISPLAY ]]; then
-      prompt_segment $BULLETTRAIN_KNS_BG $BULLETTRAIN_KNS_FG $BULLETTRAIN_KNS_PREFIX" $(kubectl config view --minify --output 'jsonpath={..namespace}')"
-    fi
+    prompt_segment $BULLETTRAIN_KNS_BG $BULLETTRAIN_KNS_FG $BULLETTRAIN_KNS_PREFIX" $(kubectl config view --minify --output 'jsonpath={..namespace}')"
   fi
 }
 
